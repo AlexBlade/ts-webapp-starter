@@ -1,0 +1,9 @@
+.env
+.vs
+.vscode
+build
+data
+dist
+logs
+node_modules
+*.config.json

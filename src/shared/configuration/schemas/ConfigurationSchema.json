@@ -1,0 +1,74 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+
+    "definitions": {
+        "storageConfiguration": {
+            "description": "Storage ",
+            "type": "object",
+            "properties": {
+                "connectionString": { "type": "string" }
+            },
+            "required": [ "connectionString" ],
+            "additionalProperties": false
+        },
+        "backendConfiguration": {
+            "description": "Configuration for the backend",
+            "type": "object",
+            "properties": {
+                "bind": { "type": "string" },
+                "contentLocation": { "type": "string" }
+            },
+            "additionalProperties": false
+        }
+    },
+
+    "type": "object",
+
+    "additionalProperties": false,
+    "required": [
+        "header",
+        "configuration"
+    ],
+
+    "properties": {
+        "header": {
+            "type": "object",
+            "properties": {
+                "type": { "type": "string", "enum": [ "backend", "custom" ] },
+                "version": { "type": "integer", "minimum": 1 }
+            },
+            "required": [ "type", "version" ]
+        },
+        "configuration": {
+            "type": "object"
+        }
+    },
+
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "header": {
+                        "properties": {
+                            "type": { "const": "backend" }
+                        }
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "configuration": {
+                        "properties": {
+                            "storage": { "$ref": "#/definitions/storageConfiguration" },
+                            "backend": {"$ref": "#/definitions/backendConfiguration" }
+                        },
+                        "required": [
+                            "storage",
+                            "backend"
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}

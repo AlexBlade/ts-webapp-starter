@@ -1,0 +1,15 @@
+{
+    "header": {
+        "type": "backend",
+        "version": 1
+    },
+    "configuration": {
+        "storage": {
+            "connectionString": "mongodb+srv://user:password@server.domain/database?retryWrites=true&w=majority"
+        },
+        "backend": {
+            "bind": "3010",
+            "contentLocation": "dist/public"
+        }
+    }
+}
